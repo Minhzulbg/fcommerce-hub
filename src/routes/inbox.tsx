@@ -174,16 +174,16 @@ function InboxPage() {
 
   return (
     <AppLayout title="Inbox" subtitle="Manage Facebook, Instagram & WhatsApp conversations">
-      <Card className="overflow-hidden rounded-2xl shadow-elegant border-border/70">
+      <Card className="overflow-hidden rounded-2xl shadow-elegant border-border/70 h-[calc(100vh-13rem)] min-h-[520px]">
         <div className={cn(
-          "grid h-[78vh] grid-cols-1",
+          "grid h-full grid-cols-1",
           showProfile
-            ? "md:grid-cols-[300px_1fr] xl:grid-cols-[300px_1fr_300px]"
-            : "md:grid-cols-[300px_1fr]"
+            ? "md:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)_300px]"
+            : "md:grid-cols-[300px_minmax(0,1fr)]"
         )}>
           {/* Threads list */}
           <div className={cn(
-            "flex flex-col border-r border-border bg-card",
+            "flex min-h-0 flex-col border-r border-border bg-card",
             mobileView === "chat" && "hidden md:flex",
           )}>
             <div className="border-b border-border p-3 space-y-2.5">
