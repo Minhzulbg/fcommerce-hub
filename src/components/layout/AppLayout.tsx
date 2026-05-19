@@ -72,7 +72,7 @@ export function AppLayout({
         </div>
         <ul className="space-y-1">
           {nav.map((item) => {
-            const active = item.to === "/" ? path === "/" : path.startsWith(item.to);
+            const active = item.to === "/dashboard" ? path === "/dashboard" || path === "/" : path.startsWith(item.to);
             const Icon = item.icon;
             return (
               <li key={item.to}>
