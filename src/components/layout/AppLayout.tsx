@@ -23,7 +23,14 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/components/theme-provider";
 
-const nav = [
+type NavItem = {
+  to: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  badge?: number;
+};
+
+const nav: NavItem[] = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/inbox", label: "Inbox", icon: Inbox, badge: 8 },
   { to: "/orders", label: "Orders", icon: ShoppingBag },
@@ -31,7 +38,7 @@ const nav = [
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/subscription", label: "Subscription", icon: CreditCard },
   { to: "/settings", label: "Settings", icon: Settings },
-] as const;
+];
 
 export function AppLayout({
   title,
