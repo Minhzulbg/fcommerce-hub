@@ -1,15 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { User, Bell, Lock, Facebook, Truck, Palette } from "lucide-react";
+import {
+  User, Bell, Lock, Facebook, Truck, Palette,
+  Eye, EyeOff, Copy, CheckCircle2, AlertTriangle, Loader2,
+  Zap, RefreshCw, Star, Plug, ShieldCheck, Wallet, MapPin,
+} from "lucide-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/theme-provider";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/settings")({
   component: SettingsPage,
@@ -171,25 +178,7 @@ function SettingsPage() {
             </Card>
           )}
 
-          {active === "couriers" && (
-            <Card className="rounded-2xl shadow-sm">
-              <CardContent className="p-6">
-                <h3 className="text-base font-semibold">Courier Integrations</h3>
-                <p className="text-xs text-muted-foreground">Enable delivery partners</p>
-                <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {["Pathao", "Steadfast", "RedX", "Paperfly"].map((c, i) => (
-                    <div key={c} className="flex items-center justify-between rounded-lg border border-border p-4">
-                      <div>
-                        <div className="text-sm font-medium">{c}</div>
-                        <div className="text-xs text-muted-foreground">{i < 2 ? "Active" : "Not connected"}</div>
-                      </div>
-                      <Switch defaultChecked={i < 2} />
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+          {active === "couriers" && <CourierSettings />}
 
           {active === "appearance" && (
             <Card className="rounded-2xl shadow-sm">
