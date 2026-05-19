@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
@@ -28,14 +31,29 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrdersRoute = OrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InboxRoute = InboxRouteImport.update({
   id: '/inbox',
   path: '/inbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -64,8 +82,11 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/customers': typeof CustomersRoute
   '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/inbox': typeof InboxRoute
+  '/login': typeof LoginRoute
   '/orders': typeof OrdersRoute
+  '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
   '/subscription': typeof SubscriptionRoute
 }
@@ -74,8 +95,11 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/customers': typeof CustomersRoute
   '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/inbox': typeof InboxRoute
+  '/login': typeof LoginRoute
   '/orders': typeof OrdersRoute
+  '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
   '/subscription': typeof SubscriptionRoute
 }
@@ -85,8 +109,11 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/customers': typeof CustomersRoute
   '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/inbox': typeof InboxRoute
+  '/login': typeof LoginRoute
   '/orders': typeof OrdersRoute
+  '/register': typeof RegisterRoute
   '/settings': typeof SettingsRoute
   '/subscription': typeof SubscriptionRoute
 }
@@ -97,8 +124,11 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/customers'
     | '/dashboard'
+    | '/forgot-password'
     | '/inbox'
+    | '/login'
     | '/orders'
+    | '/register'
     | '/settings'
     | '/subscription'
   fileRoutesByTo: FileRoutesByTo
@@ -107,8 +137,11 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/customers'
     | '/dashboard'
+    | '/forgot-password'
     | '/inbox'
+    | '/login'
     | '/orders'
+    | '/register'
     | '/settings'
     | '/subscription'
   id:
@@ -117,8 +150,11 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/customers'
     | '/dashboard'
+    | '/forgot-password'
     | '/inbox'
+    | '/login'
     | '/orders'
+    | '/register'
     | '/settings'
     | '/subscription'
   fileRoutesById: FileRoutesById
@@ -128,8 +164,11 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   CustomersRoute: typeof CustomersRoute
   DashboardRoute: typeof DashboardRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   InboxRoute: typeof InboxRoute
+  LoginRoute: typeof LoginRoute
   OrdersRoute: typeof OrdersRoute
+  RegisterRoute: typeof RegisterRoute
   SettingsRoute: typeof SettingsRoute
   SubscriptionRoute: typeof SubscriptionRoute
 }
@@ -150,6 +189,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/orders': {
       id: '/orders'
       path: '/orders'
@@ -157,11 +203,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inbox': {
       id: '/inbox'
       path: '/inbox'
       fullPath: '/inbox'
       preLoaderRoute: typeof InboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -200,8 +260,11 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   CustomersRoute: CustomersRoute,
   DashboardRoute: DashboardRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   InboxRoute: InboxRoute,
+  LoginRoute: LoginRoute,
   OrdersRoute: OrdersRoute,
+  RegisterRoute: RegisterRoute,
   SettingsRoute: SettingsRoute,
   SubscriptionRoute: SubscriptionRoute,
 }
