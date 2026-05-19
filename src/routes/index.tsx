@@ -95,10 +95,10 @@ function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-elegant">
             <Sparkles className="h-5 w-5" />
           </div>
-          <span className="text-lg font-bold tracking-tight">FCommerce</span>
+          <span className="text-lg font-extrabold tracking-tight">FCommerce</span>
         </a>
 
         {/* Desktop nav */}
