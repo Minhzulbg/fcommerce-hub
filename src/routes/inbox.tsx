@@ -263,7 +263,7 @@ function InboxPage() {
 
           {/* Chat pane */}
           <div className={cn(
-            "flex flex-col bg-muted/10",
+            "flex min-h-0 flex-col bg-muted/10",
             mobileView === "list" && "hidden md:flex",
           )}>
             {/* Chat header */}
