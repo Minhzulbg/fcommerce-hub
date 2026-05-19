@@ -299,7 +299,7 @@ function InboxPage() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5 sm:px-6">
+            <div className="flex-1 min-h-0 space-y-4 overflow-y-auto overscroll-contain px-4 py-5 sm:px-6">
               <div className="mx-auto w-fit rounded-full bg-muted/70 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                 Today
               </div>
