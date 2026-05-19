@@ -25,6 +25,7 @@ import {
   Truck,
   DollarSign,
   Plug,
+  Bot,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -55,6 +56,7 @@ const nav: NavItem[] = [
   { to: "/customers", label: "Customers", icon: Users },
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/connections", label: "Connections", icon: Plug },
+  { to: "/ai-assistant", label: "AI Assistant", icon: Bot },
   { to: "/subscription", label: "Subscription", icon: CreditCard },
   { to: "/settings", label: "Settings", icon: Settings },
 ];
