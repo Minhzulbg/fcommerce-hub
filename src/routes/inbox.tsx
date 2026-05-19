@@ -349,7 +349,7 @@ function InboxPage() {
             )}
 
             {/* Composer */}
-            <div className="border-t border-border bg-card p-3">
+            <div className="shrink-0 border-t border-border bg-card p-3">
               <div className="flex items-end gap-2">
                 <div className="flex gap-0.5">
                   <Button
