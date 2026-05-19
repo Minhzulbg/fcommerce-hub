@@ -31,7 +31,7 @@ type NavItem = {
 };
 
 const nav: NavItem[] = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/inbox", label: "Inbox", icon: Inbox, badge: 8 },
   { to: "/orders", label: "Orders", icon: ShoppingBag },
   { to: "/customers", label: "Customers", icon: Users },
@@ -72,7 +72,7 @@ export function AppLayout({
         </div>
         <ul className="space-y-1">
           {nav.map((item) => {
-            const active = item.to === "/" ? path === "/" : path.startsWith(item.to);
+            const active = item.to === "/dashboard" ? path === "/dashboard" || path === "/" : path.startsWith(item.to);
             const Icon = item.icon;
             return (
               <li key={item.to}>
