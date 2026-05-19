@@ -24,6 +24,7 @@ import {
   MessageSquare,
   Truck,
   DollarSign,
+  Plug,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -53,6 +54,7 @@ const nav: NavItem[] = [
   { to: "/orders", label: "Orders", icon: ShoppingBag },
   { to: "/customers", label: "Customers", icon: Users },
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
+  { to: "/connections", label: "Connections", icon: Plug },
   { to: "/subscription", label: "Subscription", icon: CreditCard },
   { to: "/settings", label: "Settings", icon: Settings },
 ];
