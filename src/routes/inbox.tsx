@@ -174,16 +174,16 @@ function InboxPage() {
 
   return (
     <AppLayout title="Inbox" subtitle="Manage Facebook, Instagram & WhatsApp conversations">
-      <Card className="overflow-hidden rounded-2xl shadow-elegant border-border/70">
+      <Card className="overflow-hidden rounded-2xl shadow-elegant border-border/70 h-[calc(100vh-13rem)] min-h-[520px]">
         <div className={cn(
-          "grid h-[78vh] grid-cols-1",
+          "grid h-full grid-cols-1",
           showProfile
-            ? "md:grid-cols-[300px_1fr] xl:grid-cols-[300px_1fr_300px]"
-            : "md:grid-cols-[300px_1fr]"
+            ? "md:grid-cols-[300px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)_300px]"
+            : "md:grid-cols-[300px_minmax(0,1fr)]"
         )}>
           {/* Threads list */}
           <div className={cn(
-            "flex flex-col border-r border-border bg-card",
+            "flex min-h-0 flex-col border-r border-border bg-card",
             mobileView === "chat" && "hidden md:flex",
           )}>
             <div className="border-b border-border p-3 space-y-2.5">
@@ -206,7 +206,7 @@ function InboxPage() {
                 ))}
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
               {threads.map((t) => {
                 const Ch = channelStyle[t.channel].icon;
                 return (
@@ -263,11 +263,11 @@ function InboxPage() {
 
           {/* Chat pane */}
           <div className={cn(
-            "flex flex-col bg-muted/10",
+            "flex min-h-0 flex-col bg-muted/10",
             mobileView === "list" && "hidden md:flex",
           )}>
             {/* Chat header */}
-            <div className="flex items-center justify-between border-b border-border bg-card px-4 py-3">
+            <div className="flex shrink-0 items-center justify-between border-b border-border bg-card px-4 py-3">
               <div className="flex items-center gap-3 min-w-0">
                 <Button variant="ghost" size="icon" className="h-8 w-8 md:hidden" onClick={() => setMobileView("list")}>
                   <ArrowLeft className="h-4 w-4" />
@@ -299,7 +299,7 @@ function InboxPage() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5 sm:px-6">
+            <div className="flex-1 min-h-0 space-y-4 overflow-y-auto overscroll-contain px-4 py-5 sm:px-6">
               <div className="mx-auto w-fit rounded-full bg-muted/70 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                 Today
               </div>
@@ -310,7 +310,7 @@ function InboxPage() {
             </div>
 
             {/* AI Suggestions */}
-            <div className="border-t border-border bg-card/60 px-4 py-2.5">
+            <div className="shrink-0 border-t border-border bg-card/60 px-4 py-2.5">
               <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground">
                 <Sparkles className="h-3 w-3 text-primary" /> AI SUGGESTED REPLIES
               </div>
@@ -332,7 +332,7 @@ function InboxPage() {
 
             {/* Attachment preview */}
             {attachment && (
-              <div className="border-t border-border bg-card px-4 py-2">
+              <div className="shrink-0 border-t border-border bg-card px-4 py-2">
                 <div className="flex items-center gap-3 rounded-xl border border-border bg-muted/30 p-2">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <ImageIcon className="h-5 w-5" />
@@ -349,7 +349,7 @@ function InboxPage() {
             )}
 
             {/* Composer */}
-            <div className="border-t border-border bg-card p-3">
+            <div className="shrink-0 border-t border-border bg-card p-3">
               <div className="flex items-end gap-2">
                 <div className="flex gap-0.5">
                   <Button
@@ -387,7 +387,7 @@ function InboxPage() {
 
           {/* Customer profile */}
           {showProfile && (
-            <aside className="hidden xl:flex flex-col border-l border-border bg-card overflow-y-auto">
+            <aside className="hidden xl:flex min-h-0 flex-col border-l border-border bg-card overflow-y-auto overscroll-contain">
               <div className="relative">
                 <div className="h-20 bg-gradient-mesh" />
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
