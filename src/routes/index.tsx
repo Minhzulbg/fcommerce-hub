@@ -235,12 +235,12 @@ function Hero() {
             )}
           >
             <Link to="/dashboard">
-              <Button size="lg" className="rounded-full px-8 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
+              <Button size="lg" className="rounded-full px-8 text-base bg-gradient-primary shadow-glow hover:opacity-95 transition-all hover:scale-[1.02]">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="rounded-full px-8 text-base gap-2">
+            <Button variant="outline" size="lg" className="rounded-full px-8 text-base gap-2 glass hover:bg-card">
               <Play className="h-4 w-4 fill-current" />
               Watch Demo
             </Button>
