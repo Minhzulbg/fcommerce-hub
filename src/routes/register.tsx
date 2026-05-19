@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { AuthShell, MarketingSide, SocialButtons, DividerWithText } from "./login";
+import { AuthShell, MarketingSide, SocialButtons, DividerWithText } from "@/components/auth/AuthShell";
 
 export const Route = createFileRoute("/register")({
   head: () => ({

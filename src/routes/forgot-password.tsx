@@ -4,7 +4,7 @@ import { Mail, ArrowLeft, ArrowRight, MailCheck, Sparkles, ShieldCheck } from "l
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AuthShell, MarketingSide } from "./login";
+import { AuthShell, MarketingSide } from "@/components/auth/AuthShell";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({
