@@ -20,6 +20,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as ConnectionsRouteImport } from './routes/connections'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
+import { Route as AiRepliesRouteImport } from './routes/ai-replies'
 import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -78,6 +79,11 @@ const AnalyticsRoute = AnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiRepliesRoute = AiRepliesRouteImport.update({
+  id: '/ai-replies',
+  path: '/ai-replies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiAssistantRoute = AiAssistantRouteImport.update({
   id: '/ai-assistant',
   path: '/ai-assistant',
@@ -92,6 +98,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-assistant': typeof AiAssistantRoute
+  '/ai-replies': typeof AiRepliesRoute
   '/analytics': typeof AnalyticsRoute
   '/connections': typeof ConnectionsRoute
   '/customers': typeof CustomersRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-assistant': typeof AiAssistantRoute
+  '/ai-replies': typeof AiRepliesRoute
   '/analytics': typeof AnalyticsRoute
   '/connections': typeof ConnectionsRoute
   '/customers': typeof CustomersRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-assistant': typeof AiAssistantRoute
+  '/ai-replies': typeof AiRepliesRoute
   '/analytics': typeof AnalyticsRoute
   '/connections': typeof ConnectionsRoute
   '/customers': typeof CustomersRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ai-assistant'
+    | '/ai-replies'
     | '/analytics'
     | '/connections'
     | '/customers'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ai-assistant'
+    | '/ai-replies'
     | '/analytics'
     | '/connections'
     | '/customers'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ai-assistant'
+    | '/ai-replies'
     | '/analytics'
     | '/connections'
     | '/customers'
@@ -186,6 +198,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiAssistantRoute: typeof AiAssistantRoute
+  AiRepliesRoute: typeof AiRepliesRoute
   AnalyticsRoute: typeof AnalyticsRoute
   ConnectionsRoute: typeof ConnectionsRoute
   CustomersRoute: typeof CustomersRoute
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-replies': {
+      id: '/ai-replies'
+      path: '/ai-replies'
+      fullPath: '/ai-replies'
+      preLoaderRoute: typeof AiRepliesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai-assistant': {
       id: '/ai-assistant'
       path: '/ai-assistant'
@@ -298,6 +318,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiAssistantRoute: AiAssistantRoute,
+  AiRepliesRoute: AiRepliesRoute,
   AnalyticsRoute: AnalyticsRoute,
   ConnectionsRoute: ConnectionsRoute,
   CustomersRoute: CustomersRoute,

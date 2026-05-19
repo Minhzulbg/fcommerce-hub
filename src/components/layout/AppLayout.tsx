@@ -57,6 +57,7 @@ const nav: NavItem[] = [
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/connections", label: "Connections", icon: Plug },
   { to: "/ai-assistant", label: "AI Assistant", icon: Bot },
+  { to: "/ai-replies", label: "AI Replies", icon: Sparkles },
   { to: "/subscription", label: "Subscription", icon: CreditCard },
   { to: "/settings", label: "Settings", icon: Settings },
 ];
