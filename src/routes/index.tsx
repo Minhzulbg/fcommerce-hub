@@ -264,7 +264,8 @@ function Hero() {
             inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
           )}
         >
-          <div className="relative rounded-2xl border border-border bg-card shadow-2xl shadow-primary/5 overflow-hidden">
+          <div className="relative rounded-3xl border border-border/60 glass-strong shadow-glow overflow-hidden">
+            <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/20 via-transparent to-chart-4/20 opacity-50" />
             {/* Browser chrome */}
             <div className="flex items-center gap-2 border-b border-border bg-muted/50 px-4 py-3">
               <div className="flex gap-1.5">
