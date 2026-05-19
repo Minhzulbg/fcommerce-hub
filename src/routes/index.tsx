@@ -182,10 +182,10 @@ function Hero() {
       className="relative overflow-hidden pt-28 pb-20 lg:pt-40 lg:pb-32"
     >
       {/* Gradient background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.07] via-transparent to-chart-2/[0.07]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-[120px] opacity-60" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-chart-2/10 rounded-full blur-[100px] opacity-50" />
+      <div className="absolute inset-0 -z-10 bg-gradient-mesh">
+        <div className="absolute inset-0 grid-fade opacity-40" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[560px] bg-primary/15 rounded-full blur-[140px] opacity-70" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-chart-4/15 rounded-full blur-[120px] opacity-60" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -193,7 +193,7 @@ function Hero() {
           {/* Badge */}
           <div
             className={cn(
-              "inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary transition-all duration-700",
+              "inline-flex items-center gap-2 rounded-full border border-primary/20 glass px-4 py-1.5 text-sm font-semibold text-primary transition-all duration-700 shadow-sm",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
             )}
           >
@@ -204,13 +204,13 @@ function Hero() {
           {/* Headline */}
           <h1
             className={cn(
-              "mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl transition-all duration-700 delay-100",
+              "mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-7xl transition-all duration-700 delay-100 leading-[1.05]",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
             )}
           >
             Manage Facebook orders, messages,{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-primary">AI replies</span>
+              <span className="relative z-10 text-gradient-primary">AI replies</span>
               <span className="absolute bottom-2 left-0 right-0 h-3 bg-primary/20 rounded-sm -z-0" />
             </span>
             , and courier delivery in one place.
