@@ -95,10 +95,10 @@ function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-elegant">
             <Sparkles className="h-5 w-5" />
           </div>
-          <span className="text-lg font-bold tracking-tight">FCommerce</span>
+          <span className="text-lg font-extrabold tracking-tight">FCommerce</span>
         </a>
 
         {/* Desktop nav */}
@@ -182,10 +182,10 @@ function Hero() {
       className="relative overflow-hidden pt-28 pb-20 lg:pt-40 lg:pb-32"
     >
       {/* Gradient background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.07] via-transparent to-chart-2/[0.07]" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-[120px] opacity-60" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-chart-2/10 rounded-full blur-[100px] opacity-50" />
+      <div className="absolute inset-0 -z-10 bg-gradient-mesh">
+        <div className="absolute inset-0 grid-fade opacity-40" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[560px] bg-primary/15 rounded-full blur-[140px] opacity-70" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-chart-4/15 rounded-full blur-[120px] opacity-60" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -193,7 +193,7 @@ function Hero() {
           {/* Badge */}
           <div
             className={cn(
-              "inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary transition-all duration-700",
+              "inline-flex items-center gap-2 rounded-full border border-primary/20 glass px-4 py-1.5 text-sm font-semibold text-primary transition-all duration-700 shadow-sm",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
             )}
           >
@@ -204,13 +204,13 @@ function Hero() {
           {/* Headline */}
           <h1
             className={cn(
-              "mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl transition-all duration-700 delay-100",
+              "mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-7xl transition-all duration-700 delay-100 leading-[1.05]",
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
             )}
           >
             Manage Facebook orders, messages,{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-primary">AI replies</span>
+              <span className="relative z-10 text-gradient-primary">AI replies</span>
               <span className="absolute bottom-2 left-0 right-0 h-3 bg-primary/20 rounded-sm -z-0" />
             </span>
             , and courier delivery in one place.
@@ -235,12 +235,12 @@ function Hero() {
             )}
           >
             <Link to="/dashboard">
-              <Button size="lg" className="rounded-full px-8 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
+              <Button size="lg" className="rounded-full px-8 text-base bg-gradient-primary shadow-glow hover:opacity-95 transition-all hover:scale-[1.02]">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="rounded-full px-8 text-base gap-2">
+            <Button variant="outline" size="lg" className="rounded-full px-8 text-base gap-2 glass hover:bg-card">
               <Play className="h-4 w-4 fill-current" />
               Watch Demo
             </Button>
@@ -264,7 +264,8 @@ function Hero() {
             inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
           )}
         >
-          <div className="relative rounded-2xl border border-border bg-card shadow-2xl shadow-primary/5 overflow-hidden">
+          <div className="relative rounded-3xl border border-border/60 glass-strong shadow-glow overflow-hidden">
+            <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/20 via-transparent to-chart-4/20 opacity-50" />
             {/* Browser chrome */}
             <div className="flex items-center gap-2 border-b border-border bg-muted/50 px-4 py-3">
               <div className="flex gap-1.5">
