@@ -310,7 +310,7 @@ function InboxPage() {
             </div>
 
             {/* AI Suggestions */}
-            <div className="border-t border-border bg-card/60 px-4 py-2.5">
+            <div className="shrink-0 border-t border-border bg-card/60 px-4 py-2.5">
               <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground">
                 <Sparkles className="h-3 w-3 text-primary" /> AI SUGGESTED REPLIES
               </div>
