@@ -387,7 +387,7 @@ function InboxPage() {
 
           {/* Customer profile */}
           {showProfile && (
-            <aside className="hidden xl:flex flex-col border-l border-border bg-card overflow-y-auto">
+            <aside className="hidden xl:flex min-h-0 flex-col border-l border-border bg-card overflow-y-auto overscroll-contain">
               <div className="relative">
                 <div className="h-20 bg-gradient-mesh" />
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
