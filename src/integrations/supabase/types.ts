@@ -14,16 +14,181 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          business_name: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          business_name?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          business_name?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subscription_plans: {
+        Row: {
+          created_at: string
+          duration_days: number
+          features: Json
+          id: string
+          is_active: boolean
+          message_limit: number
+          name: string
+          order_limit: number
+          page_limit: number
+          price_bdt: number
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          duration_days?: number
+          features?: Json
+          id?: string
+          is_active?: boolean
+          message_limit?: number
+          name: string
+          order_limit?: number
+          page_limit?: number
+          price_bdt: number
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          duration_days?: number
+          features?: Json
+          id?: string
+          is_active?: boolean
+          message_limit?: number
+          name?: string
+          order_limit?: number
+          page_limit?: number
+          price_bdt?: number
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          cancelled_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          plan_id: string | null
+          started_at: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          plan_id?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          plan_id?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      message_sender: "customer" | "agent" | "ai" | "system"
+      order_status:
+        | "pending"
+        | "awaiting_confirmation"
+        | "confirmed"
+        | "packing"
+        | "ready_for_courier"
+        | "shipped"
+        | "delivered"
+        | "returned"
+        | "cancelled"
+      page_status: "active" | "disconnected" | "error"
+      payment_method: "bkash" | "nagad" | "rocket" | "bank"
+      payment_status: "pending" | "approved" | "rejected"
+      subscription_status:
+        | "trial"
+        | "active"
+        | "expired"
+        | "cancelled"
+        | "pending"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +315,30 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      message_sender: ["customer", "agent", "ai", "system"],
+      order_status: [
+        "pending",
+        "awaiting_confirmation",
+        "confirmed",
+        "packing",
+        "ready_for_courier",
+        "shipped",
+        "delivered",
+        "returned",
+        "cancelled",
+      ],
+      page_status: ["active", "disconnected", "error"],
+      payment_method: ["bkash", "nagad", "rocket", "bank"],
+      payment_status: ["pending", "approved", "rejected"],
+      subscription_status: [
+        "trial",
+        "active",
+        "expired",
+        "cancelled",
+        "pending",
+      ],
+    },
   },
 } as const
