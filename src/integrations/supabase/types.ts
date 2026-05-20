@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      conversations: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          customer_avatar: string | null
+          customer_id: string | null
+          customer_name: string
+          fb_user_id: string
+          id: string
+          is_archived: boolean
+          last_message: string | null
+          last_message_at: string
+          page_id: string
+          unread_count: number
+          user_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          customer_avatar?: string | null
+          customer_id?: string | null
+          customer_name: string
+          fb_user_id: string
+          id?: string
+          is_archived?: boolean
+          last_message?: string | null
+          last_message_at?: string
+          page_id: string
+          unread_count?: number
+          user_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          customer_avatar?: string | null
+          customer_id?: string | null
+          customer_name?: string
+          fb_user_id?: string
+          id?: string
+          is_archived?: boolean
+          last_message?: string | null
+          last_message_at?: string
+          page_id?: string
+          unread_count?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "facebook_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           address: string | null
@@ -117,6 +180,219 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      messages: {
+        Row: {
+          attachments: Json
+          content: string | null
+          conversation_id: string
+          created_at: string
+          fb_message_id: string | null
+          id: string
+          is_read: boolean
+          sender: Database["public"]["Enums"]["message_sender"]
+          user_id: string
+        }
+        Insert: {
+          attachments?: Json
+          content?: string | null
+          conversation_id: string
+          created_at?: string
+          fb_message_id?: string | null
+          id?: string
+          is_read?: boolean
+          sender: Database["public"]["Enums"]["message_sender"]
+          user_id: string
+        }
+        Update: {
+          attachments?: Json
+          content?: string | null
+          conversation_id?: string
+          created_at?: string
+          fb_message_id?: string | null
+          id?: string
+          is_read?: boolean
+          sender?: Database["public"]["Enums"]["message_sender"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          product_name: string
+          quantity: number
+          total: number
+          unit_price: number
+          user_id: string
+          variant: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          product_name: string
+          quantity?: number
+          total?: number
+          unit_price?: number
+          user_id: string
+          variant?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          product_name?: string
+          quantity?: number
+          total?: number
+          unit_price?: number
+          user_id?: string
+          variant?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_timeline: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          note: string | null
+          order_id: string
+          status: Database["public"]["Enums"]["order_status"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          order_id: string
+          status: Database["public"]["Enums"]["order_status"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          order_id?: string
+          status?: Database["public"]["Enums"]["order_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_timeline_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          cod_amount: number
+          conversation_id: string | null
+          courier: string | null
+          created_at: string
+          customer_id: string | null
+          customer_name: string
+          customer_phone: string
+          delivery_address: string
+          delivery_city: string | null
+          delivery_fee: number
+          discount: number
+          id: string
+          notes: string | null
+          order_number: string
+          payment_method: string | null
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total: number
+          tracking_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cod_amount?: number
+          conversation_id?: string | null
+          courier?: string | null
+          created_at?: string
+          customer_id?: string | null
+          customer_name: string
+          customer_phone: string
+          delivery_address: string
+          delivery_city?: string | null
+          delivery_fee?: number
+          discount?: number
+          id?: string
+          notes?: string | null
+          order_number: string
+          payment_method?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          total?: number
+          tracking_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cod_amount?: number
+          conversation_id?: string | null
+          courier?: string | null
+          created_at?: string
+          customer_id?: string | null
+          customer_name?: string
+          customer_phone?: string
+          delivery_address?: string
+          delivery_city?: string | null
+          delivery_fee?: number
+          discount?: number
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_method?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          total?: number
+          tracking_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       payment_requests: {
         Row: {
