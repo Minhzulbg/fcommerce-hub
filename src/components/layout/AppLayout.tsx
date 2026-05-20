@@ -110,7 +110,7 @@ export function AppLayout({
     },
   });
   const navItems: NavItem[] = isAdmin
-    ? [...nav, { to: "/admin-payments", label: "Admin · Payments", icon: ShieldCheck }]
+    ? [...nav, { to: "/admin/dashboard", label: "Admin Console", icon: ShieldCheck }]
     : nav;
 
   const handleLogout = async () => {
