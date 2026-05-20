@@ -1,4 +1,6 @@
+import { useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   ShoppingBag,
   DollarSign,
@@ -27,6 +29,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -44,34 +48,43 @@ type Stat = {
   spark: number[];
 };
 
-const stats: Stat[] = [
+type LiveCounts = {
+  orders: number;
+  revenue: number;
+  unread: number;
+  aiReplies: number;
+  delivered: number;
+  shipped: number;
+};
+
+const buildStats = (c: LiveCounts): Stat[] => [
   {
     label: "Total Orders",
-    value: "2,847",
+    value: c.orders.toLocaleString(),
     delta: "+12.4%",
     trend: "up",
     icon: ShoppingBag,
-    hint: "vs last month",
+    hint: "all time",
     accent: "from-blue-500/25 via-blue-500/5 to-transparent",
     ring: "text-blue-600 dark:text-blue-400",
     spark: [12, 18, 14, 22, 19, 26, 24, 30, 28, 34],
   },
   {
     label: "Revenue",
-    value: "৳ 8,42,560",
+    value: c.revenue >= 100000 ? `৳ ${(c.revenue / 100000).toFixed(2)}L` : `৳ ${c.revenue.toLocaleString()}`,
     delta: "+18.2%",
     trend: "up",
     icon: DollarSign,
-    hint: "this month",
+    hint: "delivered orders",
     accent: "from-emerald-500/25 via-emerald-500/5 to-transparent",
     ring: "text-emerald-600 dark:text-emerald-400",
     spark: [20, 24, 19, 28, 32, 30, 36, 38, 42, 48],
   },
   {
     label: "Unread Messages",
-    value: "126",
-    delta: "-4.1%",
-    trend: "down",
+    value: c.unread.toLocaleString(),
+    delta: c.unread > 0 ? `${c.unread} new` : "all clear",
+    trend: c.unread > 0 ? "down" : "up",
     icon: MessageSquare,
     hint: "in inbox",
     accent: "from-amber-500/25 via-amber-500/5 to-transparent",
@@ -80,18 +93,18 @@ const stats: Stat[] = [
   },
   {
     label: "AI Replies",
-    value: "1,032",
+    value: c.aiReplies.toLocaleString(),
     delta: "+34.6%",
     trend: "up",
     icon: Bot,
-    hint: "auto-handled",
+    hint: "drafted",
     accent: "from-violet-500/25 via-violet-500/5 to-transparent",
     ring: "text-violet-600 dark:text-violet-400",
     spark: [8, 12, 10, 16, 18, 22, 26, 30, 34, 40],
   },
   {
     label: "Courier Success",
-    value: "94.2%",
+    value: c.shipped + c.delivered > 0 ? `${Math.round((c.delivered / (c.shipped + c.delivered)) * 100)}%` : "—",
     delta: "+1.8%",
     trend: "up",
     icon: Truck,
@@ -276,10 +289,41 @@ function WeeklyOrdersChart() {
 }
 
 function Dashboard() {
+  const { user } = useAuth();
+
+  const countsQ = useQuery({
+    queryKey: ["dashboard-counts", user?.id],
+    enabled: !!user,
+    queryFn: async (): Promise<LiveCounts> => {
+      const [ordersRes, revenueRes, unreadRes, shippedRes, deliveredRes] = await Promise.all([
+        supabase.from("orders").select("*", { count: "exact", head: true }),
+        supabase.from("orders").select("total").eq("status", "delivered"),
+        supabase.from("conversations").select("unread_count"),
+        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "shipped"),
+        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "delivered"),
+      ]);
+      const revenue = (revenueRes.data ?? []).reduce((s, o: any) => s + (o.total ?? 0), 0);
+      const unread = (unreadRes.data ?? []).reduce((s, c: any) => s + (c.unread_count ?? 0), 0);
+      return {
+        orders: ordersRes.count ?? 0,
+        revenue,
+        unread,
+        aiReplies: 0,
+        shipped: shippedRes.count ?? 0,
+        delivered: deliveredRes.count ?? 0,
+      };
+    },
+  });
+
+  const stats = useMemo(
+    () => buildStats(countsQ.data ?? { orders: 0, revenue: 0, unread: 0, aiReplies: 0, shipped: 0, delivered: 0 }),
+    [countsQ.data],
+  );
+
   return (
     <AppLayout
       title="Dashboard"
-      subtitle="Welcome back, Arif. Here's what's happening today."
+      subtitle="Welcome back. Here's what's happening today."
       actions={
         <>
           <Button variant="outline" size="sm" className="rounded-full">

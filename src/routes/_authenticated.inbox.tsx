@@ -30,6 +30,8 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { suggestReply } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/_authenticated/inbox")({
   component: InboxPage,
@@ -280,6 +282,19 @@ function ChatPane({ conversation }: { conversation: Conversation }) {
     onError: (e: any) => toast.error(e.message ?? "Failed"),
   });
 
+  const suggestFn = useServerFn(suggestReply);
+  const suggest = useMutation({
+    mutationFn: async () => {
+      const res = await suggestFn({ data: { conversationId: conversation.id } });
+      return res.reply;
+    },
+    onSuccess: (reply) => {
+      setText(reply);
+      toast.success("AI reply drafted — review & send");
+    },
+    onError: (e: any) => toast.error(e.message ?? "AI failed"),
+  });
+
   return (
     <>
       <div className="flex items-center justify-between border-b border-border p-3">
@@ -337,6 +352,23 @@ function ChatPane({ conversation }: { conversation: Conversation }) {
       </div>
 
       <div className="border-t border-border p-3">
+        <div className="mb-2 flex items-center gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => suggest.mutate()}
+            disabled={suggest.isPending}
+            className="gap-1.5 rounded-full bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border-violet-500/30 text-violet-700 dark:text-violet-300 hover:from-violet-500/20 hover:to-fuchsia-500/20"
+          >
+            {suggest.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+            Suggest reply
+          </Button>
+          {text && (
+            <Button size="sm" variant="ghost" onClick={() => setText("")} className="text-xs text-muted-foreground">
+              Clear
+            </Button>
+          )}
+        </div>
         <div className="flex items-end gap-2">
           <Input
             value={text}
