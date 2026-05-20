@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/subscription")({
+export const Route = createFileRoute("/_authenticated/subscription")({
   component: SubscriptionPage,
 });
 

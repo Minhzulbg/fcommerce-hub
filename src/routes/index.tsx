@@ -119,12 +119,12 @@ function Navbar() {
           <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
-          <Link to="/dashboard">
+          <Link to="/register">
             <Button variant="outline" size="sm" className="rounded-full px-4">
               Log in
             </Button>
           </Link>
-          <Link to="/dashboard">
+          <Link to="/register">
             <Button size="sm" className="rounded-full px-5">
               Start Free Trial
             </Button>
@@ -234,7 +234,7 @@ function Hero() {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
             )}
           >
-            <Link to="/dashboard">
+            <Link to="/register">
               <Button size="lg" className="rounded-full px-8 text-base bg-gradient-primary shadow-glow hover:opacity-95 transition-all hover:scale-[1.02]">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -749,7 +749,7 @@ function CTABanner() {
             Join 2,400+ sellers using FCommerce to automate, grow, and delight customers.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link to="/dashboard">
+            <Link to="/register">
               <Button
                 size="lg"
                 variant="secondary"
