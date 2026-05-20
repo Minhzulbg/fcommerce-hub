@@ -21,6 +21,21 @@ export const Route = createFileRoute("/forgot-password")({
 function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setSent(true);
+  };
 
   return (
     <AuthShell side={<MarketingSide />}>
@@ -40,31 +55,17 @@ function ForgotPasswordPage() {
             </p>
           </div>
 
-          <form
-            className="mt-8 space-y-5"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-            }}
-          >
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
             <div className="space-y-1.5">
               <Label htmlFor="email">Email address</Label>
               <div className="relative">
                 <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@brand.com"
-                  className="h-11 pl-9"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <Input id="email" type="email" placeholder="you@brand.com" className="h-11 pl-9" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
             </div>
 
-            <Button type="submit" className="h-11 w-full rounded-xl bg-gradient-primary text-white shadow-elegant hover:shadow-glow">
-              Send reset link <ArrowRight className="ml-1 h-4 w-4" />
+            <Button type="submit" disabled={loading} className="h-11 w-full rounded-xl bg-gradient-primary text-white shadow-elegant hover:shadow-glow">
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Send reset link <ArrowRight className="ml-1 h-4 w-4" /></>}
             </Button>
 
             <div className="flex items-center gap-2 rounded-xl border border-border bg-muted/40 p-3 text-xs text-muted-foreground">
