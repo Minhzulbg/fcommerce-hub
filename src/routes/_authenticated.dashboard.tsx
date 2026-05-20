@@ -289,10 +289,41 @@ function WeeklyOrdersChart() {
 }
 
 function Dashboard() {
+  const { user } = useAuth();
+
+  const countsQ = useQuery({
+    queryKey: ["dashboard-counts", user?.id],
+    enabled: !!user,
+    queryFn: async (): Promise<LiveCounts> => {
+      const [ordersRes, revenueRes, unreadRes, shippedRes, deliveredRes] = await Promise.all([
+        supabase.from("orders").select("*", { count: "exact", head: true }),
+        supabase.from("orders").select("total").eq("status", "Delivered"),
+        supabase.from("conversations").select("unread_count"),
+        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "Shipped"),
+        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "Delivered"),
+      ]);
+      const revenue = (revenueRes.data ?? []).reduce((s, o: any) => s + (o.total ?? 0), 0);
+      const unread = (unreadRes.data ?? []).reduce((s, c: any) => s + (c.unread_count ?? 0), 0);
+      return {
+        orders: ordersRes.count ?? 0,
+        revenue,
+        unread,
+        aiReplies: 0,
+        shipped: shippedRes.count ?? 0,
+        delivered: deliveredRes.count ?? 0,
+      };
+    },
+  });
+
+  const stats = useMemo(
+    () => buildStats(countsQ.data ?? { orders: 0, revenue: 0, unread: 0, aiReplies: 0, shipped: 0, delivered: 0 }),
+    [countsQ.data],
+  );
+
   return (
     <AppLayout
       title="Dashboard"
-      subtitle="Welcome back, Arif. Here's what's happening today."
+      subtitle="Welcome back. Here's what's happening today."
       actions={
         <>
           <Button variant="outline" size="sm" className="rounded-full">
