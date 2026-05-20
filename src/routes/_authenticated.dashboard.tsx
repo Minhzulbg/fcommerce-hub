@@ -48,34 +48,43 @@ type Stat = {
   spark: number[];
 };
 
-const stats: Stat[] = [
+type LiveCounts = {
+  orders: number;
+  revenue: number;
+  unread: number;
+  aiReplies: number;
+  delivered: number;
+  shipped: number;
+};
+
+const buildStats = (c: LiveCounts): Stat[] => [
   {
     label: "Total Orders",
-    value: "2,847",
+    value: c.orders.toLocaleString(),
     delta: "+12.4%",
     trend: "up",
     icon: ShoppingBag,
-    hint: "vs last month",
+    hint: "all time",
     accent: "from-blue-500/25 via-blue-500/5 to-transparent",
     ring: "text-blue-600 dark:text-blue-400",
     spark: [12, 18, 14, 22, 19, 26, 24, 30, 28, 34],
   },
   {
     label: "Revenue",
-    value: "৳ 8,42,560",
+    value: c.revenue >= 100000 ? `৳ ${(c.revenue / 100000).toFixed(2)}L` : `৳ ${c.revenue.toLocaleString()}`,
     delta: "+18.2%",
     trend: "up",
     icon: DollarSign,
-    hint: "this month",
+    hint: "delivered orders",
     accent: "from-emerald-500/25 via-emerald-500/5 to-transparent",
     ring: "text-emerald-600 dark:text-emerald-400",
     spark: [20, 24, 19, 28, 32, 30, 36, 38, 42, 48],
   },
   {
     label: "Unread Messages",
-    value: "126",
-    delta: "-4.1%",
-    trend: "down",
+    value: c.unread.toLocaleString(),
+    delta: c.unread > 0 ? `${c.unread} new` : "all clear",
+    trend: c.unread > 0 ? "down" : "up",
     icon: MessageSquare,
     hint: "in inbox",
     accent: "from-amber-500/25 via-amber-500/5 to-transparent",
@@ -84,18 +93,18 @@ const stats: Stat[] = [
   },
   {
     label: "AI Replies",
-    value: "1,032",
+    value: c.aiReplies.toLocaleString(),
     delta: "+34.6%",
     trend: "up",
     icon: Bot,
-    hint: "auto-handled",
+    hint: "drafted",
     accent: "from-violet-500/25 via-violet-500/5 to-transparent",
     ring: "text-violet-600 dark:text-violet-400",
     spark: [8, 12, 10, 16, 18, 22, 26, 30, 34, 40],
   },
   {
     label: "Courier Success",
-    value: "94.2%",
+    value: c.shipped + c.delivered > 0 ? `${Math.round((c.delivered / (c.shipped + c.delivered)) * 100)}%` : "—",
     delta: "+1.8%",
     trend: "up",
     icon: Truck,
