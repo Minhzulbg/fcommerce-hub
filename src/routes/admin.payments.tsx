@@ -1,27 +1,15 @@
 import { useState } from "react";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader2, CheckCircle2, XCircle, Clock, ShieldCheck } from "lucide-react";
-import { AppLayout } from "@/components/layout/AppLayout";
+import { Loader2, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/admin-payments")({
-  beforeLoad: async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw redirect({ to: "/login" });
-    const { data } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", user.id)
-      .eq("role", "admin")
-      .maybeSingle();
-    if (!data) throw redirect({ to: "/dashboard" });
-  },
+export const Route = createFileRoute("/admin/payments")({
   component: AdminPaymentsPage,
 });
 
@@ -62,57 +50,36 @@ function AdminPaymentsPage() {
 
   const approve = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.rpc("approve_payment_request", {
-        _request_id: id,
-        _note: note || undefined,
-      });
+      const { error } = await supabase.rpc("approve_payment_request", { _request_id: id, _note: note || undefined });
       if (error) throw error;
     },
     onSuccess: () => {
       toast.success("Payment approved & subscription activated");
-      setNoteFor(null);
-      setNote("");
+      setNoteFor(null); setNote("");
       qc.invalidateQueries({ queryKey: ["admin_payments"] });
+      qc.invalidateQueries({ queryKey: ["admin_stats"] });
     },
     onError: (e: any) => toast.error(e.message ?? "Approve failed"),
   });
 
   const reject = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.rpc("reject_payment_request", {
-        _request_id: id,
-        _note: note || undefined,
-      });
+      const { error } = await supabase.rpc("reject_payment_request", { _request_id: id, _note: note || undefined });
       if (error) throw error;
     },
     onSuccess: () => {
       toast.success("Payment rejected");
-      setNoteFor(null);
-      setNote("");
+      setNoteFor(null); setNote("");
       qc.invalidateQueries({ queryKey: ["admin_payments"] });
     },
     onError: (e: any) => toast.error(e.message ?? "Reject failed"),
   });
 
   return (
-    <AppLayout
-      title="Payment Approvals"
-      subtitle="Review and approve subscription payments"
-      actions={
-        <Badge variant="outline" className="gap-1">
-          <ShieldCheck className="h-3 w-3" /> Admin
-        </Badge>
-      }
-    >
+    <AdminLayout title="Payment Approvals" subtitle="Review and approve subscription payments">
       <div className="mb-4 flex gap-2">
         {(["pending", "approved", "rejected", "all"] as const).map((f) => (
-          <Button
-            key={f}
-            variant={filter === f ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter(f)}
-            className="capitalize"
-          >
+          <Button key={f} variant={filter === f ? "default" : "outline"} size="sm" onClick={() => setFilter(f)} className="capitalize">
             {f}
           </Button>
         ))}
@@ -158,35 +125,20 @@ function AdminPaymentsPage() {
                     <td className="px-4 py-3 font-mono text-xs">{p.transaction_id}</td>
                     <td className="px-4 py-3 font-medium">৳ {p.amount}</td>
                     <td className="px-4 py-3"><StatusBadge status={p.status} /></td>
-                    <td className="px-4 py-3 text-xs text-muted-foreground">
-                      {new Date(p.created_at).toLocaleString()}
-                    </td>
+                    <td className="px-4 py-3 text-xs text-muted-foreground">{new Date(p.created_at).toLocaleString()}</td>
                     <td className="px-4 py-3">
                       {p.status === "pending" ? (
                         noteFor === p.id ? (
                           <div className="flex flex-col gap-2 min-w-[200px]">
-                            <Input
-                              placeholder="Note (optional)"
-                              value={note}
-                              onChange={(e) => setNote(e.target.value)}
-                              className="h-8 text-xs"
-                            />
+                            <Input placeholder="Note (optional)" value={note} onChange={(e) => setNote(e.target.value)} className="h-8 text-xs" />
                             <div className="flex gap-1">
-                              <Button size="sm" className="h-7 text-xs" onClick={() => approve.mutate(p.id)} disabled={approve.isPending}>
-                                Approve
-                              </Button>
-                              <Button size="sm" variant="destructive" className="h-7 text-xs" onClick={() => reject.mutate(p.id)} disabled={reject.isPending}>
-                                Reject
-                              </Button>
-                              <Button size="sm" variant="ghost" className="h-7 text-xs" onClick={() => { setNoteFor(null); setNote(""); }}>
-                                Cancel
-                              </Button>
+                              <Button size="sm" className="h-7 text-xs" onClick={() => approve.mutate(p.id)} disabled={approve.isPending}>Approve</Button>
+                              <Button size="sm" variant="destructive" className="h-7 text-xs" onClick={() => reject.mutate(p.id)} disabled={reject.isPending}>Reject</Button>
+                              <Button size="sm" variant="ghost" className="h-7 text-xs" onClick={() => { setNoteFor(null); setNote(""); }}>Cancel</Button>
                             </div>
                           </div>
                         ) : (
-                          <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => setNoteFor(p.id)}>
-                            Review
-                          </Button>
+                          <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => setNoteFor(p.id)}>Review</Button>
                         )
                       ) : (
                         <span className="text-xs text-muted-foreground">{p.admin_note ?? "—"}</span>
@@ -199,7 +151,7 @@ function AdminPaymentsPage() {
           </table>
         </div>
       </Card>
-    </AppLayout>
+    </AdminLayout>
   );
 }
 
