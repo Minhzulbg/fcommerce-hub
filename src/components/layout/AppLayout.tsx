@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { ShieldCheck } from "lucide-react";
 import {
   LayoutDashboard,
   Inbox,
@@ -94,6 +96,23 @@ export function AppLayout({
     "User";
   const initials = displayName.slice(0, 2).toUpperCase();
 
+  const { data: isAdmin } = useQuery({
+    queryKey: ["is_admin", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user!.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      return !!data;
+    },
+  });
+  const navItems: NavItem[] = isAdmin
+    ? [...nav, { to: "/admin-payments", label: "Admin · Payments", icon: ShieldCheck }]
+    : nav;
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     toast.success("Signed out");
@@ -116,7 +135,7 @@ export function AppLayout({
           Workspace
         </div>
         <ul className="space-y-0.5">
-          {nav.map((item) => {
+          {navItems.map((item) => {
             const active = item.to === "/dashboard" ? path === "/dashboard" || path === "/" : path.startsWith(item.to);
             const Icon = item.icon;
             return (

@@ -25,6 +25,7 @@ import { Route as AuthenticatedConnectionsRouteImport } from './routes/_authenti
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated.analytics'
 import { Route as AuthenticatedAiRepliesRouteImport } from './routes/_authenticated.ai-replies'
 import { Route as AuthenticatedAiAssistantRouteImport } from './routes/_authenticated.ai-assistant'
+import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated.admin-payments'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -108,6 +109,12 @@ const AuthenticatedAiAssistantRoute =
     path: '/ai-assistant',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedAdminPaymentsRoute =
+  AuthenticatedAdminPaymentsRouteImport.update({
+    id: '/admin-payments',
+    path: '/admin-payments',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin-payments': typeof AuthenticatedAdminPaymentsRoute
   '/ai-assistant': typeof AuthenticatedAiAssistantRoute
   '/ai-replies': typeof AuthenticatedAiRepliesRoute
   '/analytics': typeof AuthenticatedAnalyticsRoute
@@ -132,6 +140,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin-payments': typeof AuthenticatedAdminPaymentsRoute
   '/ai-assistant': typeof AuthenticatedAiAssistantRoute
   '/ai-replies': typeof AuthenticatedAiRepliesRoute
   '/analytics': typeof AuthenticatedAnalyticsRoute
@@ -151,6 +160,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/admin-payments': typeof AuthenticatedAdminPaymentsRoute
   '/_authenticated/ai-assistant': typeof AuthenticatedAiAssistantRoute
   '/_authenticated/ai-replies': typeof AuthenticatedAiRepliesRoute
   '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/admin-payments'
     | '/ai-assistant'
     | '/ai-replies'
     | '/analytics'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/admin-payments'
     | '/ai-assistant'
     | '/ai-replies'
     | '/analytics'
@@ -205,6 +217,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/_authenticated/admin-payments'
     | '/_authenticated/ai-assistant'
     | '/_authenticated/ai-replies'
     | '/_authenticated/analytics'
@@ -340,10 +353,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiAssistantRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/admin-payments': {
+      id: '/_authenticated/admin-payments'
+      path: '/admin-payments'
+      fullPath: '/admin-payments'
+      preLoaderRoute: typeof AuthenticatedAdminPaymentsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedAdminPaymentsRoute: typeof AuthenticatedAdminPaymentsRoute
   AuthenticatedAiAssistantRoute: typeof AuthenticatedAiAssistantRoute
   AuthenticatedAiRepliesRoute: typeof AuthenticatedAiRepliesRoute
   AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
@@ -357,6 +378,7 @@ interface AuthenticatedRouteChildren {
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminPaymentsRoute: AuthenticatedAdminPaymentsRoute,
   AuthenticatedAiAssistantRoute: AuthenticatedAiAssistantRoute,
   AuthenticatedAiRepliesRoute: AuthenticatedAiRepliesRoute,
   AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
