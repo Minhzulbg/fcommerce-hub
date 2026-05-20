@@ -463,8 +463,6 @@ function CustomersPage() {
 
       {showAdd && <AddCustomerDialog onClose={() => setShowAdd(false)} />}
       <CustomerDrawer c={selected} open={!!selected} onClose={() => setSelected(null)} />
-      {/* Unused imports retained: MessageSquare */}
-      <span className="hidden"><MessageSquare /></span>
     </AppLayout>
   );
 }
