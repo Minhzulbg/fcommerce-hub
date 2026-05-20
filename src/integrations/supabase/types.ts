@@ -14,6 +14,163 @@ export type Database = {
   }
   public: {
     Tables: {
+      customers: {
+        Row: {
+          address: string | null
+          avatar_url: string | null
+          city: string | null
+          created_at: string
+          email: string | null
+          fb_user_id: string | null
+          id: string
+          name: string
+          notes: string | null
+          page_id: string | null
+          phone: string | null
+          tags: string[]
+          total_orders: number
+          total_spent: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          fb_user_id?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          page_id?: string | null
+          phone?: string | null
+          tags?: string[]
+          total_orders?: number
+          total_spent?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          fb_user_id?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          page_id?: string | null
+          phone?: string | null
+          tags?: string[]
+          total_orders?: number
+          total_spent?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customers_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "facebook_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      facebook_pages: {
+        Row: {
+          access_token: string
+          category: string | null
+          connected_at: string
+          id: string
+          last_sync_at: string | null
+          page_avatar: string | null
+          page_id: string
+          page_name: string
+          status: Database["public"]["Enums"]["page_status"]
+          user_id: string
+        }
+        Insert: {
+          access_token: string
+          category?: string | null
+          connected_at?: string
+          id?: string
+          last_sync_at?: string | null
+          page_avatar?: string | null
+          page_id: string
+          page_name: string
+          status?: Database["public"]["Enums"]["page_status"]
+          user_id: string
+        }
+        Update: {
+          access_token?: string
+          category?: string | null
+          connected_at?: string
+          id?: string
+          last_sync_at?: string | null
+          page_avatar?: string | null
+          page_id?: string
+          page_name?: string
+          status?: Database["public"]["Enums"]["page_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payment_requests: {
+        Row: {
+          admin_note: string | null
+          amount: number
+          created_at: string
+          id: string
+          method: Database["public"]["Enums"]["payment_method"]
+          plan_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          sender_number: string
+          status: Database["public"]["Enums"]["payment_status"]
+          transaction_id: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          amount: number
+          created_at?: string
+          id?: string
+          method: Database["public"]["Enums"]["payment_method"]
+          plan_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          sender_number: string
+          status?: Database["public"]["Enums"]["payment_status"]
+          transaction_id: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          amount?: number
+          created_at?: string
+          id?: string
+          method?: Database["public"]["Enums"]["payment_method"]
+          plan_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          sender_number?: string
+          status?: Database["public"]["Enums"]["payment_status"]
+          transaction_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_requests_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
