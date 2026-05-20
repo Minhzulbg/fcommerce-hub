@@ -592,12 +592,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_payment_request: {
+        Args: { _note?: string; _request_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      promote_to_admin: { Args: { _email: string }; Returns: undefined }
+      reject_payment_request: {
+        Args: { _note?: string; _request_id: string }
+        Returns: undefined
       }
     }
     Enums: {
