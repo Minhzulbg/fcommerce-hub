@@ -30,6 +30,8 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { suggestReply } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/_authenticated/inbox")({
   component: InboxPage,
@@ -278,6 +280,19 @@ function ChatPane({ conversation }: { conversation: Conversation }) {
     },
     onSuccess: () => toast.success("Incoming message simulated"),
     onError: (e: any) => toast.error(e.message ?? "Failed"),
+  });
+
+  const suggestFn = useServerFn(suggestReply);
+  const suggest = useMutation({
+    mutationFn: async () => {
+      const res = await suggestFn({ data: { conversationId: conversation.id } });
+      return res.reply;
+    },
+    onSuccess: (reply) => {
+      setText(reply);
+      toast.success("AI reply drafted — review & send");
+    },
+    onError: (e: any) => toast.error(e.message ?? "AI failed"),
   });
 
   return (
