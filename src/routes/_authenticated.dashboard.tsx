@@ -297,10 +297,10 @@ function Dashboard() {
     queryFn: async (): Promise<LiveCounts> => {
       const [ordersRes, revenueRes, unreadRes, shippedRes, deliveredRes] = await Promise.all([
         supabase.from("orders").select("*", { count: "exact", head: true }),
-        supabase.from("orders").select("total").eq("status", "Delivered"),
+        supabase.from("orders").select("total").eq("status", "delivered"),
         supabase.from("conversations").select("unread_count"),
-        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "Shipped"),
-        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "Delivered"),
+        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "shipped"),
+        supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "delivered"),
       ]);
       const revenue = (revenueRes.data ?? []).reduce((s, o: any) => s + (o.total ?? 0), 0);
       const unread = (unreadRes.data ?? []).reduce((s, c: any) => s + (c.unread_count ?? 0), 0);
