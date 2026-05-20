@@ -64,7 +64,7 @@ function AdminPaymentsPage() {
     mutationFn: async (id: string) => {
       const { error } = await supabase.rpc("approve_payment_request", {
         _request_id: id,
-        _note: note || null,
+        _note: note || undefined,
       });
       if (error) throw error;
     },
@@ -81,7 +81,7 @@ function AdminPaymentsPage() {
     mutationFn: async (id: string) => {
       const { error } = await supabase.rpc("reject_payment_request", {
         _request_id: id,
-        _note: note || null,
+        _note: note || undefined,
       });
       if (error) throw error;
     },
