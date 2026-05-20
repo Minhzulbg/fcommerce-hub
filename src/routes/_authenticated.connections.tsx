@@ -46,7 +46,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/connections")({
+export const Route = createFileRoute("/_authenticated/connections")({
   head: () => ({
     meta: [
       { title: "Connections — FCommerce" },
