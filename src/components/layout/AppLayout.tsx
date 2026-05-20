@@ -86,6 +86,19 @@ export function AppLayout({
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const displayName =
+    (user?.user_metadata?.full_name as string | undefined) ||
+    user?.email?.split("@")[0] ||
+    "User";
+  const initials = displayName.slice(0, 2).toUpperCase();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast.success("Signed out");
+    navigate({ to: "/login" });
+  };
 
   const SidebarInner = (
     <div className="flex h-full flex-col">
