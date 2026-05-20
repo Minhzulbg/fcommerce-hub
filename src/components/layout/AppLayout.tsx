@@ -270,12 +270,12 @@ export function AppLayout({
                 <button className="ml-1 flex items-center gap-2 rounded-full border border-border bg-card/60 pl-1 pr-2 py-1 transition-colors hover:bg-muted">
                   <Avatar className="h-7 w-7">
                     <AvatarFallback className="bg-gradient-primary text-primary-foreground text-xs font-semibold">
-                      AR
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="hidden sm:block leading-tight text-left">
-                    <div className="text-xs font-semibold">Arif Rahman</div>
-                    <div className="text-[10px] text-muted-foreground">Admin</div>
+                    <div className="text-xs font-semibold">{displayName}</div>
+                    <div className="text-[10px] text-muted-foreground">Account</div>
                   </div>
                   <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
                 </button>
@@ -283,23 +283,23 @@ export function AppLayout({
               <DropdownMenuContent align="end" className="w-60">
                 <div className="flex items-center gap-3 px-2 py-2">
                   <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-gradient-primary text-primary-foreground text-sm font-semibold">AR</AvatarFallback>
+                    <AvatarFallback className="bg-gradient-primary text-primary-foreground text-sm font-semibold">{initials}</AvatarFallback>
                   </Avatar>
                   <div className="leading-tight">
-                    <div className="text-sm font-semibold">Arif Rahman</div>
-                    <div className="text-xs text-muted-foreground">arif@fcommerce.app</div>
+                    <div className="text-sm font-semibold">{displayName}</div>
+                    <div className="text-xs text-muted-foreground">{user?.email}</div>
                   </div>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   Account
                 </DropdownMenuLabel>
-                <DropdownMenuItem><User className="h-4 w-4" /> Profile</DropdownMenuItem>
-                <DropdownMenuItem><Settings className="h-4 w-4" /> Settings</DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/settings"><User className="h-4 w-4" /> Profile</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link to="/settings"><Settings className="h-4 w-4" /> Settings</Link></DropdownMenuItem>
                 <DropdownMenuItem><Keyboard className="h-4 w-4" /> Keyboard shortcuts</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem><HelpCircle className="h-4 w-4" /> Help & support</DropdownMenuItem>
-                <DropdownMenuItem className="text-destructive focus:text-destructive">
+                <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
                   <LogOut className="h-4 w-4" /> Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
