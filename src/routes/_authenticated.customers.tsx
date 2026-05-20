@@ -11,7 +11,6 @@ import {
   UserPlus,
   Crown,
   ShoppingBag,
-  MessageSquare,
   Facebook,
   Tag,
   TrendingUp,
