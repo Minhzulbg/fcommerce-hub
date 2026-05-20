@@ -135,7 +135,7 @@ export function AppLayout({
           Workspace
         </div>
         <ul className="space-y-0.5">
-          {nav.map((item) => {
+          {navItems.map((item) => {
             const active = item.to === "/dashboard" ? path === "/dashboard" || path === "/" : path.startsWith(item.to);
             const Icon = item.icon;
             return (
