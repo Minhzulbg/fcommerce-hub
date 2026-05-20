@@ -5,11 +5,13 @@ import {
   createRootRouteWithContext,
   useRouter,
   HeadContent,
+  Scripts,
 } from "@tanstack/react-router";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
+import "../styles.css";
 
 function NotFoundComponent() {
   return (
