@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Mail, ArrowLeft, ArrowRight, MailCheck, Sparkles, ShieldCheck } from "lucide-react";
+import { Mail, ArrowLeft, ArrowRight, MailCheck, Sparkles, ShieldCheck, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthShell, MarketingSide } from "@/components/auth/AuthShell";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({
