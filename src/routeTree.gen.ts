@@ -26,6 +26,7 @@ import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAiRepliesRouteImport } from './routes/_authenticated.ai-replies'
 import { Route as AuthenticatedAiAssistantRouteImport } from './routes/_authenticated.ai-assistant'
 import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated.admin-payments'
+import { Route as ApiPublicWebhooksFacebookRouteImport } from './routes/api/public/webhooks/facebook'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -115,6 +116,12 @@ const AuthenticatedAdminPaymentsRoute =
     path: '/admin-payments',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const ApiPublicWebhooksFacebookRoute =
+  ApiPublicWebhooksFacebookRouteImport.update({
+    id: '/api/public/webhooks/facebook',
+    path: '/api/public/webhooks/facebook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof AuthenticatedOrdersRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/api/public/webhooks/facebook': typeof ApiPublicWebhooksFacebookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -151,6 +159,7 @@ export interface FileRoutesByTo {
   '/orders': typeof AuthenticatedOrdersRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/api/public/webhooks/facebook': typeof ApiPublicWebhooksFacebookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -171,6 +180,7 @@ export interface FileRoutesById {
   '/_authenticated/orders': typeof AuthenticatedOrdersRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/subscription': typeof AuthenticatedSubscriptionRoute
+  '/api/public/webhooks/facebook': typeof ApiPublicWebhooksFacebookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -191,6 +201,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/settings'
     | '/subscription'
+    | '/api/public/webhooks/facebook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/settings'
     | '/subscription'
+    | '/api/public/webhooks/facebook'
   id:
     | '__root__'
     | '/'
@@ -228,6 +240,7 @@ export interface FileRouteTypes {
     | '/_authenticated/orders'
     | '/_authenticated/settings'
     | '/_authenticated/subscription'
+    | '/api/public/webhooks/facebook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -237,6 +250,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicWebhooksFacebookRoute: typeof ApiPublicWebhooksFacebookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -360,6 +374,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPaymentsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/api/public/webhooks/facebook': {
+      id: '/api/public/webhooks/facebook'
+      path: '/api/public/webhooks/facebook'
+      fullPath: '/api/public/webhooks/facebook'
+      preLoaderRoute: typeof ApiPublicWebhooksFacebookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -402,6 +423,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicWebhooksFacebookRoute: ApiPublicWebhooksFacebookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

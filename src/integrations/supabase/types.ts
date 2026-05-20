@@ -603,10 +603,22 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_conversation_read: {
+        Args: { _conversation_id: string }
+        Returns: undefined
+      }
       promote_to_admin: { Args: { _email: string }; Returns: undefined }
       reject_payment_request: {
         Args: { _note?: string; _request_id: string }
         Returns: undefined
+      }
+      send_agent_reply: {
+        Args: { _conversation_id: string; _text: string }
+        Returns: string
+      }
+      simulate_incoming_message: {
+        Args: { _conversation_id: string; _text: string }
+        Returns: string
       }
     }
     Enums: {
