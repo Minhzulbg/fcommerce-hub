@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { ShieldCheck } from "lucide-react";
 import {
   LayoutDashboard,
   Inbox,
